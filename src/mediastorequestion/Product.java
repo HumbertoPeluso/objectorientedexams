@@ -47,6 +47,7 @@ public abstract class Product {
     }
 
     public abstract double getPrice();
-   public abstract String toString();
+
+    public abstract String toString();
 
 }
