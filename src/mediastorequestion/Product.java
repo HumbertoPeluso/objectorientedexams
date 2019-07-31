@@ -1,32 +1,33 @@
 package mediastorequestion;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public abstract class Product {
-
+    private final double EXTRA_FEE = 0.50;
     private int id;
     private String title;
-    private Date dateBorrow, dateBack;
+    private LocalDate dateBorrow, dateBack;
 
-    public Product(int id, String title, Date dateBorrow) {
+    public Product(int id, String title, LocalDate dateBorrow) {
         this.id = id;
         this.title = title;
         this.dateBorrow = dateBorrow;
     }
 
-    public Date getDateBorrow() {
+    public LocalDate getDateBorrow() {
         return dateBorrow;
     }
 
-    public void setDateBorrow(Date dateBorrow) {
+    public void setDateBorrow(LocalDate dateBorrow) {
         this.dateBorrow = dateBorrow;
     }
 
-    public Date getDateBack() {
+    public LocalDate getDateBack() {
         return dateBack;
     }
 
-    public void setDateBack(Date dateBack) {
+    public void setDateBack(LocalDate dateBack) {
         this.dateBack = dateBack;
     }
 
@@ -46,7 +47,19 @@ public abstract class Product {
         this.title = title;
     }
 
+    public double getFee() {
+        Double fee = this.getPrice();
+        if (this.dateBack != null) {
+            Long period = ChronoUnit.DAYS.between(dateBorrow, dateBack);
+            if(period > this.getBorrowPeriodInDays())
+                fee += (EXTRA_FEE * period) - (EXTRA_FEE * getBorrowPeriodInDays());
+        }
+        return fee;
+    }
+
     public abstract double getPrice();
+
+    public abstract int getBorrowPeriodInDays();
 
     public abstract String toString();
 

@@ -1,12 +1,13 @@
 package mediastorequestion;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-public class DVD extends Product{
+public class DVD extends Product {
+    private final int BORROW_PERIOD_IN_DAYS = 7;
+    private final double DVD_PRICE = 12.0;
+    private final String TYPE = "DVD";
 
-private final double DVD_PRICE = 12.0;
-
-    public DVD(int id, String title, Date dateBorrow) {
+    public DVD(int id, String title, LocalDate dateBorrow) {
         super(id, title, dateBorrow);
     }
 
@@ -16,7 +17,14 @@ private final double DVD_PRICE = 12.0;
     }
 
     @Override
+    public int getBorrowPeriodInDays() {
+        return BORROW_PERIOD_IN_DAYS;
+    }
+
+    @Override
     public String toString() {
-        return null;
+        return "title: "+this.getTitle()+" " +
+                "type: "+TYPE+ " " +"Fee: "+super.getFee()+"\n"+
+                "....................";
     }
 }
